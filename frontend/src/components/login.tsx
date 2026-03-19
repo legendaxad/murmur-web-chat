@@ -3,7 +3,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 type LoginProps = {
-  onLogin: (user: { name: string; token: string; nickname: string }) => void;
+  onLogin: (user: {
+    id: string;
+    name: string;
+    token: string;
+    nickname: string;
+  }) => void;
 };
 
 const Login = ({ onLogin }: LoginProps) => {
@@ -25,7 +30,6 @@ const Login = ({ onLogin }: LoginProps) => {
     setLoading(true);
 
     try {
-      // Step 1: Send user data to backend for authentication
       const response = await fetch("http://localhost:7722/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,107 +42,104 @@ const Login = ({ onLogin }: LoginProps) => {
         throw new Error(data.message || "Login failed");
       }
 
-      await createSendbirdUser(data.user.name, data.user.nickname, data.token);
+      toast.success("Welcome 🚀");
 
-      toast.success("Login successful!");
       onLogin({
+        id: data.user.id, // ✅ IMPORTANT FIX
         name: data.user.name,
         token: data.token,
         nickname: data.user.nickname,
       });
     } catch (err: any) {
-      toast.error(err.message || "server error!");
+      toast.error(err.message || "Server error!");
     } finally {
       setLoading(false);
     }
   };
 
-  const createSendbirdUser = async (
-    name: string,
-    nickname: string,
-    token: string
-  ) => {
-    const SEND_BIRD_API_TOKEN =
-      process.env.REACT_APP_SENDBIRD_API_TOKEN || "default-value";
-
-    try {
-      const response = await fetch(`https://api.sendbird.com/v3/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Api-Token": SEND_BIRD_API_TOKEN,
-        },
-        body: JSON.stringify({
-          user_id: name,
-          nickname: nickname,
-          access_token: token,
-        }),
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          responseData.message || "Failed to create Sendbird user"
-        );
-      }
-
-      console.log("Sendbird user created:", responseData);
-    } catch (error) {
-      console.error("Error creating Sendbird user:", error);
-      toast.error("Error creating Sendbird user!");
-    }
-  };
-
   return (
-    <div style={styles.container}>
-      <h2>Login</h2>
-      <input
-        type="text"
-        placeholder="Ism"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        style={styles.input}
-      />
-      <input
-        type="text"
-        placeholder="Nickname"
-        value={nickname}
-        onChange={(e) => setNickname(e.target.value)}
-        style={styles.input}
-      />
-      <button onClick={handleLogin} style={styles.button} disabled={loading}>
-        {loading ? "Loading..." : "Enter"}
-      </button>
+    <div style={styles.wrapper}>
+      <div style={styles.card}>
+        <h2 style={styles.title}>Welcome 👋</h2>
+        <p style={styles.subtitle}>Join your chat community</p>
+
+        <input
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          style={styles.input}
+        />
+
+        <input
+          type="text"
+          placeholder="Nickname"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+          style={styles.input}
+        />
+
+        <button
+          onClick={handleLogin}
+          style={{
+            ...styles.button,
+            opacity: loading ? 0.7 : 1,
+            cursor: loading ? "not-allowed" : "pointer",
+          }}
+          disabled={loading}
+        >
+          {loading ? "Entering..." : "Enter Chat"}
+        </button>
+      </div>
+
       <ToastContainer />
     </div>
   );
 };
 
 const styles = {
-  container: {
-    maxWidth: "300px",
-    margin: "50px auto",
+  wrapper: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+  },
+  card: {
+    width: "320px",
+    padding: "30px",
+    borderRadius: "16px",
+    background: "#ffffff",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
     textAlign: "center" as const,
-    padding: "20px",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
+  },
+  title: {
+    marginBottom: "5px",
+  },
+  subtitle: {
+    fontSize: "14px",
+    color: "#666",
+    marginBottom: "20px",
   },
   input: {
     width: "100%",
-    padding: "10px",
-    margin: "8px 0",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
+    padding: "12px",
+    marginBottom: "12px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    outline: "none",
+    fontSize: "14px",
   },
   button: {
     width: "100%",
-    padding: "10px",
-    backgroundColor: "#007bff",
-    color: "#fff",
+    padding: "12px",
+    borderRadius: "8px",
     border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
+    background: "linear-gradient(135deg, #066858, #027d69)",
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: "15px",
+    transition: "0.3s",
   },
 };
 

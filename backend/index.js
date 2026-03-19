@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "*" }));
 app.use("/", router);
 app.use(errorMiddleware);
-const PORT = 7722;
+const PORT = process.env.PORT || 7722;
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
