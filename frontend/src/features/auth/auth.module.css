@@ -1,0 +1,177 @@
+.splash {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-5);
+}
+
+.logoMark {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.logoMark span {
+  width: 20px;
+  height: 16px;
+  border-radius: 8px 8px 8px 3px;
+  background: #fff;
+}
+
+.page {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+}
+
+.brandPanel {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+  background: radial-gradient(1200px 600px at -10% -20%, #8b74ec 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 120%, #0ea5a4 0%, transparent 55%), #1b1530;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+}
+
+.brand .logoMark {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: none;
+}
+
+.brand .logoMark span {
+  width: 16px;
+  height: 13px;
+}
+
+.pitch {
+  max-width: 440px;
+}
+
+.pitch h1 {
+  margin: 0 0 var(--space-3);
+  font-size: 40px;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.pitch p {
+  margin: 0;
+  font-size: var(--text-lg);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.previewStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 360px;
+}
+
+.previewBubble {
+  align-self: flex-start;
+  padding: 10px 14px;
+  border-radius: 18px 18px 18px 6px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  font-size: var(--text-md);
+}
+
+.previewBubbleOut {
+  align-self: flex-end;
+  border-radius: 18px 18px 6px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1b1530;
+}
+
+.formPanel {
+  display: grid;
+  place-items: center;
+  padding: var(--space-8) var(--space-6);
+  background: var(--bg-elevated);
+}
+
+.card {
+  width: min(400px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.cardHeader h2 {
+  margin: 0 0 6px;
+  font-size: var(--text-2xl);
+  letter-spacing: -0.02em;
+}
+
+.cardHeader p {
+  margin: 0;
+  color: var(--text-3);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.formError {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: var(--text-sm);
+}
+
+.switch {
+  text-align: center;
+  color: var(--text-3);
+  font-size: var(--text-sm);
+}
+
+.mobileBrand {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .brandPanel {
+    display: none;
+  }
+
+  .formPanel {
+    align-items: start;
+    padding-top: 12vh;
+  }
+
+  .mobileBrand {
+    display: flex;
+    color: var(--text);
+  }
+
+  .mobileBrand .logoMark {
+    background: var(--accent);
+  }
+}

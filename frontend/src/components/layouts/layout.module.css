@@ -1,0 +1,158 @@
+.shell {
+  height: 100%;
+  display: grid;
+  grid-template-columns: var(--rail-width) minmax(0, 1fr);
+  background: var(--bg);
+}
+
+.main {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ---------- Rail ---------- */
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+
+.railLogo {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.railLogo span {
+  width: 18px;
+  height: 14px;
+  border-radius: 7px 7px 7px 3px;
+  background: #fff;
+}
+
+.railItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.railItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 56px;
+  padding: var(--space-2) 0;
+  border-radius: var(--radius-md);
+  color: var(--text-3);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.railItem:hover {
+  text-decoration: none;
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+.railItemActive,
+.railItemActive:hover {
+  color: var(--accent-soft-text);
+  background: var(--accent-soft);
+}
+
+.railIcon {
+  position: relative;
+  display: grid;
+}
+
+.railBadge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 2px var(--surface);
+}
+
+.railLabel {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.railBottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.railMe {
+  border-radius: 50%;
+}
+
+/* ---------- Mobile: rail becomes a bottom tab bar ---------- */
+@media (max-width: 768px) {
+  .shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .main {
+    grid-row: 1;
+  }
+
+  .rail {
+    grid-row: 2;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 6px var(--space-2) calc(6px + env(safe-area-inset-bottom));
+    border-right: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .railLogo,
+  .railMe {
+    display: none;
+  }
+
+  .railItems {
+    flex-direction: row;
+    margin: 0;
+    flex: 1;
+    justify-content: space-around;
+  }
+
+  .railItem {
+    width: 72px;
+  }
+
+  .railBottom {
+    margin: 0;
+    flex-direction: row;
+  }
+
+  /* Hide the tab bar while a conversation is open, so the composer gets the space. */
+  .inConversation .rail {
+    display: none;
+  }
+}

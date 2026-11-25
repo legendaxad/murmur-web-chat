@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Murmur",
+  "name": "Murmur",
   "icons": [
     {
       "src": "favicon.ico",
